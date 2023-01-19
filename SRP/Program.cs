@@ -2,8 +2,11 @@
 
 public class Program
 {
+    private static readonly BookStore _bookStore = new BookStore();
+    private static readonly BookPresenter _bookPresenter = new BookPresenter();
     public static void Main(string[] args)
     {
+
         var run = true;
         do
         {
@@ -67,23 +70,20 @@ public class Program
 
     private static void FetchAndDisplayBook()
     {
-        var book = new Book(id: 1);
-        book.Load();
-        book.Display();
+        var book = _bookStore.GetBook(1);
+        _bookPresenter.Display(book);
     }
 
     private static void FailToFetchBook()
     {
-        var book = new Book();
-        book.Load(); // Exception: You must set the Id to the Book Id you want to load.
-        book.Display();
+        var book = _bookStore.GetBook(100);
+        _bookPresenter.Display(book);
     }
 
     private static void BookDoesNotExist()
     {
-        var book = new Book(id: 999);
-        book.Load();
-        book.Display();
+        var book = _bookStore.GetBook(100);
+        _bookPresenter.Display(book);
     }
 
     private static void CreateOutOfOrderBook()
@@ -93,8 +93,8 @@ public class Program
             Id = 4, // this value is not enforced by anything and will be overriden at some point.
             Title = "Some out of order book"
         };
-        book.Save();
-        book.Display();
+        _bookStore.Add(book);
+        _bookPresenter.Display(book);
     }
 
     private static void DisplayTheBookSomewhereElse()
@@ -108,15 +108,15 @@ public class Program
         Console.Clear();
         Console.WriteLine("Please enter the book title: ");
         var title = Console.ReadLine();
-        var book = new Book { Id = Book.NextId, Title = title };
-        book.Save();
+        var book = new Book {  Title = title };
+        _bookStore.Add(book);
     }
 
     private static void ListAllBooks()
     {
-        foreach (var book in Book.Books)
+        foreach (var book in _bookStore.Books)
         {
-            book.Display();
+            _bookPresenter.Display(book);
         }
     }
 }
