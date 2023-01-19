@@ -5,6 +5,10 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SRP", "SRP\SRP.csproj", "{A49D0FF4-1159-4737-9875-4D7883FC9FD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NinjaAttack", "NinjaAttack\NinjaAttack.csproj", "{C69BFA00-1D22-4F41-910D-C6529D052F58}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OCP", "OCP", "{A6F17638-0E4E-4B8E-9B5E-E856A487A687}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{A49D0FF4-1159-4737-9875-4D7883FC9FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A49D0FF4-1159-4737-9875-4D7883FC9FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A49D0FF4-1159-4737-9875-4D7883FC9FD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C69BFA00-1D22-4F41-910D-C6529D052F58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C69BFA00-1D22-4F41-910D-C6529D052F58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C69BFA00-1D22-4F41-910D-C6529D052F58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C69BFA00-1D22-4F41-910D-C6529D052F58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C69BFA00-1D22-4F41-910D-C6529D052F58} = {A6F17638-0E4E-4B8E-9B5E-E856A487A687}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2B4D3E47-667E-47CF-9C50-59CAC1B8945D}
