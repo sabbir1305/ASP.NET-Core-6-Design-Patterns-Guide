@@ -8,7 +8,7 @@ namespace NinjaAttack.Models
         public string Attacker { get; }
         public string Target { get; }
         public bool Succeeded { get; }
-        public double Distance { get; }
+        public float Distance { get; }
 
         public AttackResult(Weapon weapon, IAttacker attacker, IAttackable target)
         {

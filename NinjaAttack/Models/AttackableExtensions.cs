@@ -5,7 +5,7 @@ namespace NinjaAttack.Models
 {
     public static class AttackableExtensions
     {
-        public static double DistanceFrom(this IAttackable attacker, IAttackable target)
+        public static float DistanceFrom(this IAttackable attacker, IAttackable target)
         {
             return Vector2.Distance(attacker.Position, target.Position);
         }
