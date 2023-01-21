@@ -1,18 +1,20 @@
-﻿using System;
+﻿using SRP.Contracts;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SRP
 {
-    public class BookStore
+    public class BookStore : IBookStore
     {
         private static int _lastId = 0;
 
         private static List<Book> _books;
         private static int NextId => ++_lastId;
-        public IEnumerable<Book> Books => _books;
+        public IEnumerable<Book> Books => new ReadOnlyCollection<Book>(_books);
 
         static BookStore()
         {
@@ -26,7 +28,7 @@ namespace SRP
             };
         }
 
-        public void Add(Book book)
+        public void Create(Book book)
         {
             if (book.Id != default)
                 throw new Exception("A new book can not be created with an id");
@@ -34,7 +36,7 @@ namespace SRP
             _books.Add(book);
         }
 
-        public void Update(Book book)
+        public void Replace(Book book)
         {
             if (!_books.Any(x => x.Id == book.Id))
             {
@@ -44,13 +46,23 @@ namespace SRP
             _books[index] = book;
         }
 
-        public Book? GetBook(int aBookId)
+        public Book? Find(int aBookId)
         {
             var book = _books.FirstOrDefault(x => x.Id == aBookId);
             if(book == null)
-                throw new Exception($"Book {book.Id} does not exist!");
+                throw new Exception($"Book {aBookId} does not exist!");
             return book;
         }
 
+
+        public void Remove(Book book)
+        {
+            if (_books.Any(x => x.Id == book.Id))
+            {
+                throw new Exception($"Book {book.Id} does not exist!");
+            }
+            var index = _books.FindIndex(x => x.Id == book.Id);
+            _books.RemoveAt(index);
+        }
     }
 }

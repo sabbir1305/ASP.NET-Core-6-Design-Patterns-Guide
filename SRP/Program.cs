@@ -1,8 +1,11 @@
-﻿namespace SRP;
+﻿using SRP.Contracts;
+
+namespace SRP;
 
 public class Program
 {
-    private static readonly BookStore _bookStore = new BookStore();
+    private static readonly IBookWriter _bookWriter = new BookStore();
+    private static readonly IBookReader _bookReader = new BookStore();
     private static readonly BookPresenter _bookPresenter = new BookPresenter();
     public static void Main(string[] args)
     {
@@ -70,19 +73,19 @@ public class Program
 
     private static void FetchAndDisplayBook()
     {
-        var book = _bookStore.GetBook(1);
+        var book = _bookReader.Find(1);
         _bookPresenter.Display(book);
     }
 
     private static void FailToFetchBook()
     {
-        var book = _bookStore.GetBook(100);
+        var book = _bookReader.Find(100);
         _bookPresenter.Display(book);
     }
 
     private static void BookDoesNotExist()
     {
-        var book = _bookStore.GetBook(100);
+        var book = _bookReader.Find(100);
         _bookPresenter.Display(book);
     }
 
@@ -93,7 +96,7 @@ public class Program
             Id = 4, // this value is not enforced by anything and will be overriden at some point.
             Title = "Some out of order book"
         };
-        _bookStore.Add(book);
+        _bookWriter.Create(book);
         _bookPresenter.Display(book);
     }
 
@@ -109,12 +112,12 @@ public class Program
         Console.WriteLine("Please enter the book title: ");
         var title = Console.ReadLine();
         var book = new Book {  Title = title };
-        _bookStore.Add(book);
+        _bookWriter.Create(book);
     }
 
     private static void ListAllBooks()
     {
-        foreach (var book in _bookStore.Books)
+        foreach (var book in _bookReader.Books)
         {
             _bookPresenter.Display(book);
         }
