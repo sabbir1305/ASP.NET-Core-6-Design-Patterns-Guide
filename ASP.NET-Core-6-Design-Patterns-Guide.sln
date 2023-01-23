@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NinjaAttack", "NinjaAttack\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OCP", "OCP", "{A6F17638-0E4E-4B8E-9B5E-E856A487A687}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerMinimalAPI", "CustomerMinimalAPI\CustomerMinimalAPI.csproj", "{7537ABB8-4DFD-40DB-BDB7-22F0E6FD31BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerMinimalAPI", "CustomerMinimalAPI\CustomerMinimalAPI.csproj", "{7537ABB8-4DFD-40DB-BDB7-22F0E6FD31BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strategy", "Strategy\Strategy.csproj", "{068D91EF-3C98-42A3-8F64-6BF16C58F0A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{7537ABB8-4DFD-40DB-BDB7-22F0E6FD31BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7537ABB8-4DFD-40DB-BDB7-22F0E6FD31BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7537ABB8-4DFD-40DB-BDB7-22F0E6FD31BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{068D91EF-3C98-42A3-8F64-6BF16C58F0A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{068D91EF-3C98-42A3-8F64-6BF16C58F0A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{068D91EF-3C98-42A3-8F64-6BF16C58F0A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{068D91EF-3C98-42A3-8F64-6BF16C58F0A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
