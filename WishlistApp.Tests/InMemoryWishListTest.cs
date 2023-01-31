@@ -62,6 +62,7 @@ namespace WishlistApp.Tests
             {
                 //Arrange
                 const int expectedCount = 2;
+                await sut.AddOrRefreshAsync(_newItemName);
 
                 //Act
                 var result = await sut.AddOrRefreshAsync(_newItemName);
@@ -85,23 +86,52 @@ namespace WishlistApp.Tests
             }
 
             [Fact]
+            public async Task Should_return_items_ordered_by_Count_Descending()
+            {
+                // Arrange
+                await AddOrRefreshAnItemAsync("Item1");
+                await AddOrRefreshAnItemAsync("Item1");
+                await AddOrRefreshAnItemAsync("Item1");
+                await AddOrRefreshAnItemAsync("Item2");
+                await AddOrRefreshAnItemAsync("Item3");
+                await AddOrRefreshAnItemAsync("Item3");
+
+                // Act
+                var result = await sut.AllAsync();
+
+                // Assert
+                Assert.Collection(result,
+                    x => Assert.Equal("Item1", x.Name),
+                    x => Assert.Equal("Item3", x.Name),
+                    x => Assert.Equal("Item2", x.Name)
+                );
+            }
+
+            [Fact]
             public async Task Should_remove_expired_items()
             {
-                await AddOrRefreshAnExpiredItemAsync("Item1");
-                await AddOrRefreshAnExpiredItemAsync("Item2");
-                await AddOrRefreshAnExpiredItemAsync("Item3");
+                // Arrange
+                await AddOrRefreshAnItemAsync("Item1");
+                await AddOrRefreshAnItemAsync("Item2");
+                await AddOrRefreshAnItemAsync("Item3");
                 await AddOrRefreshAnExpiredItemAsync("Item4");
 
+                // Act
                 await sut.AddOrRefreshAsync("Item5");
 
-                var result = (await sut.AllAsync()).OrderBy(x => x);
-                Assert.Collection(result, 
+                // Assert
+                var result = (await sut.AllAsync()).OrderBy(x => x.Name);
+                Assert.Collection(result,
                     x => Assert.Equal("Item1", x.Name),
                     x => Assert.Equal("Item2", x.Name),
                     x => Assert.Equal("Item3", x.Name),
-                    x => Assert.Equal("Item4", x.Name));
+                    x => Assert.Equal("Item5", x.Name)
+                );
             }
+
         }
+
+
 
         public class AllAsync : InMemoryWishListTest
         {
