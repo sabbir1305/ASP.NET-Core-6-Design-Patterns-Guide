@@ -3,7 +3,11 @@ using DecoratorPattern;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSingleton<IComponent>(serviceProvider => new DecoratorB(new DecoratorA(new ComponentA())));
+builder.Services
+.AddSingleton<IComponent, ComponentA>()
+.Decorate<IComponent, DecoratorA>()
+.Decorate<IComponent, DecoratorB>()
+;
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
