@@ -10,7 +10,7 @@ builder.Services
 
 var app = builder.Build();
 
-app.MapGet("/", (IEnumerable<SearchMachine> searchMachines) =>
+app.MapGet("/template", (IEnumerable<SearchMachine> searchMachines) =>
 {
     var sb = new StringBuilder();
     var elementsToFind = new int[] { 1, 10, 11 };
