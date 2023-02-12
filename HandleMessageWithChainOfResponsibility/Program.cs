@@ -1,32 +1,39 @@
-var builder = WebApplication.CreateBuilder(args);
+using HandleMessageWithChainOfResponsibility;
+using HandleMessageWithChainOfResponsibility.Handlers.Messages;
+using HandleMessageWithChainOfResponsibility.Services;
 
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSingleton<IMessageHandler>(new AlarmTriggeredHandler(new AlarmPausedHandler(new AlarmStoppedHandler(new DailyAlarmHandler(new DefaultHandler())))));
 // Add services to the container.
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+// "Menu" endpoint
+app.MapGet("/", () => new[] {
+    "/handle/AlarmTriggered",
+    "/handle/AlarmPaused",
+    "/handle/AlarmStopped",
+    "/handle/Foo",
+    "/handle/Bar",
+    "/handle/Baz",
+    "/handle/SomeUnhandledMessageName",
+});
 
-app.MapGet("/weatherforecast", () =>
+// Consumer (client) endpoint
+app.MapGet("/handle/{name}", (string name, string? payload, IMessageHandler messageHandler) =>
 {
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateTime.Now.AddDays(index),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    var message = new Message(name, payload);
+    try
+    {
+        // Send the message into the chain of responsibility
+        messageHandler.Handle(message);
+        return $"Message '{message.Name}' handled successfully.";
+    }
+    catch (NotSupportedException ex)
+    {
+        return ex.Message;
+    }
 });
 
 app.Run();
-
-internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
