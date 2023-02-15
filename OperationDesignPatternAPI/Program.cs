@@ -1,10 +1,11 @@
-using OperationDesignPatternAPI.SimplestForm;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
-    .AddSingleton<Executor>();
+    .AddSingleton<OperationDesignPatternAPI.SimplestForm.Executor>()
+    .AddSingleton<OperationDesignPatternAPI.SingleError.Executor>();
 
 var app = builder.Build();
 app.MapGet("/", () =>
@@ -20,7 +21,7 @@ app.MapGet("/", () =>
     };
 });
 
-app.MapGet("/simplest-form", (Executor executor) =>
+app.MapGet("/simplest-form", (OperationDesignPatternAPI.SimplestForm.Executor executor) =>
 {
     var result = executor.Operation();
     if (result.Succeeded)
@@ -32,6 +33,21 @@ app.MapGet("/simplest-form", (Executor executor) =>
     {
         // Handle the failure
         return "Operation failed";
+    }
+});
+
+app.MapGet("/single-error", (OperationDesignPatternAPI.SingleError.Executor executor) =>
+{
+    var result = executor.Operation();
+    if (result.Succeeded)
+    {
+        // Handle the success
+        return "Operation succeeded";
+    }
+    else
+    {
+        // Handle the failure
+        return result.ErrorMessage;
     }
 });
 
