@@ -6,7 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddSingleton<OperationDesignPatternAPI.SimplestForm.Executor>()
     .AddSingleton<OperationDesignPatternAPI.SingleError.Executor>()
-    .AddSingleton<OperationDesignPatternAPI.SingleErrorWithValue.Executor>();
+    .AddSingleton<OperationDesignPatternAPI.SingleErrorWithValue.Executor>()
+    .AddSingleton<OperationDesignPatternAPI.MultipleErrorsWithValue.Executor>();
 
 var app = builder.Build();
 app.MapGet("/", () =>
@@ -64,6 +65,21 @@ app.MapGet("/single-error-with-value", (OperationDesignPatternAPI.SingleErrorWit
     {
         // Handle the failure
         return $"Operation failed for '{result.Value}'";
+    }
+});
+
+app.MapGet("/multiple-errors-with-value", (OperationDesignPatternAPI.MultipleErrorsWithValue.Executor executor) =>
+{
+    var result = executor.Operation();
+    if (result.Succeeded)
+    {
+        // Handle the success
+        return $"Operation succeeded with a value of '{result.Value}'.";
+    }
+    else
+    {
+        // Handle the failure
+        return result.Errors as object;
     }
 });
 
