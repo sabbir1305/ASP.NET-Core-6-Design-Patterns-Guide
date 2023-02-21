@@ -7,7 +7,8 @@ builder.Services
     .AddSingleton<OperationDesignPatternAPI.SimplestForm.Executor>()
     .AddSingleton<OperationDesignPatternAPI.SingleError.Executor>()
     .AddSingleton<OperationDesignPatternAPI.SingleErrorWithValue.Executor>()
-    .AddSingleton<OperationDesignPatternAPI.MultipleErrorsWithValue.Executor>();
+    .AddSingleton<OperationDesignPatternAPI.MultipleErrorsWithValue.Executor>()
+    .AddSingleton<OperationDesignPatternAPI.WithSeverity.Executor>();
 
 var app = builder.Build();
 app.MapGet("/", () =>
@@ -83,6 +84,19 @@ app.MapGet("/multiple-errors-with-value", (OperationDesignPatternAPI.MultipleErr
     }
 });
 
+app.MapGet("/multiple-errors-with-value-and-severity", (OperationDesignPatternAPI.WithSeverity.Executor executor) =>
+{
+    var result = executor.Operation();
+    if (result.Succeeded)
+    {
+        Console.WriteLine("Even number");
+    }
+    else
+    {
+        Console.WriteLine("Unknwon number");
+    }
+    return result;
+});
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
