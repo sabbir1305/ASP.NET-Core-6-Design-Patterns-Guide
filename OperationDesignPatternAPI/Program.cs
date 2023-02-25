@@ -8,7 +8,8 @@ builder.Services
     .AddSingleton<OperationDesignPatternAPI.SingleError.Executor>()
     .AddSingleton<OperationDesignPatternAPI.SingleErrorWithValue.Executor>()
     .AddSingleton<OperationDesignPatternAPI.MultipleErrorsWithValue.Executor>()
-    .AddSingleton<OperationDesignPatternAPI.WithSeverity.Executor>();
+    .AddSingleton<OperationDesignPatternAPI.WithSeverity.Executor>()
+    .AddSingleton<OperationDesignPatternAPI.StaticFactoryMethod.Executor>();
 
 var app = builder.Build();
 app.MapGet("/", () =>
@@ -94,6 +95,20 @@ app.MapGet("/multiple-errors-with-value-and-severity", (OperationDesignPatternAP
     else
     {
         Console.WriteLine("Unknwon number");
+    }
+    return result;
+});
+
+app.MapGet("/static-factory-methods", (OperationDesignPatternAPI.StaticFactoryMethod.Executor executor) =>
+{
+    var result = executor.Operation();
+    if (result.Succeeded)
+    {
+        // Handle the success
+    }
+    else
+    {
+        // Handle the failure
     }
     return result;
 });
